@@ -10,43 +10,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
 /**
- * gHost.ClientHandler: responsible for the correct routing of client on connect and request.
+ * ClientHandler: responsible for the correct routing of client on connect and request.
 */
 
-class ClientHandler implements Runnable, Loggable, Database {
-    /**
-     * Number of unique client connections during server operation.
-     */
+class ClientHandler implements Runnable, Loggable, Repository {
     static final AtomicInteger clientCounter = new AtomicInteger(0);
     private final DataHandler DataHandler = new DataHandler();
-
-    /**
-     * The connection to the client's device.
-     */
     private final Socket client;
-
-    /**
-     * The remote ip address of the client's device.
-     */
-    private final String ip;
-
-    /**
-     * The location of the program's file store.
-     */
     private final String rootDirectory;
 
-
-    /**
-     * gHost.ClientHandler constructor.
-     *
-     * @param client        The connection to the client represented by a Socket.
-     * @param rootDirectory The location of the program's file store.
-     */
     ClientHandler(Socket client, String rootDirectory) {
         this.client = client;
         this.rootDirectory = rootDirectory;
-        //Save the client's ip for later use.
-        this.ip = client.getRemoteSocketAddress().toString().replaceAll(":.*", "");
+        String ip = client.getRemoteSocketAddress().toString().replaceAll(":.*", "");
         DataHandler.addAddress(ip);
     }
 
@@ -65,13 +41,6 @@ class ClientHandler implements Runnable, Loggable, Database {
         }
     }
 
-    /**
-     * Parses the user's request and forwards to the route handler on GET request detected.
-     *
-     * @param clientInput  The data received from the client.
-     * @param clientOutput The pipe to the client.
-     * @throws IOException Thrown when no clientInput exists.
-     */
     private void requestHandler(BufferedReader clientInput, PrintWriter clientOutput) throws IOException {
         String inp;
         while ((inp = clientInput.readLine()) != null) {
@@ -86,17 +55,10 @@ class ClientHandler implements Runnable, Loggable, Database {
         }
     }
 
-    /**
-     * Determines which page to return to client based on parsed request.
-     *
-     * @param request      An array of client request data.
-     * @param clientOutput The pipe to the client.
-     */
     private void routeFilter(String[] request, PrintWriter clientOutput) {
         String[] queries = StringUtil.formatQuery(request);
         String url = request[1];
-        /* Catch all external file calls
-         * TODO abstract into better file call checks. */
+        /* Catch all external file calls */
         if (url.contains(".")) {
             loadExternalFile(url, clientOutput);
             return;
@@ -108,16 +70,7 @@ class ClientHandler implements Runnable, Loggable, Database {
         }
     }
 
-
-    /**
-     * Routes request and query data to the correct method to be sent to user.
-     *
-     * @param clientOutput The pipe to the client.
-     * @param pageRequest  The name of the page client has requested.
-     * @param queries      The list of queries to be handled.
-     */
     synchronized private void loadDynamic(PrintWriter clientOutput, String pageRequest, String[] queries) {
-        /* Insert, if any, query data into the database through gHost.DataHandler. */
         HashMap<String, String> updates = null;
         boolean dynamic = queries.length > 0;
         try {
@@ -127,49 +80,27 @@ class ClientHandler implements Runnable, Loggable, Database {
                     break;
             }
         } finally {
-            /* Send an ok and load the new order page for the client. */
             textHeader(clientOutput, "html");
             /* If no queries are present, load page normally; such as on first load. */
             if (!dynamic) {
                 pageLoader(pageRequest, clientOutput, "%STATUS%", "New");
             } else {
-            /* Will replace locations on the page with relevant information on a new order. */
                 pageLoader(pageRequest, clientOutput, updates);
             }
         }
     }
 
-    /**
-     * Sends 404 error code header to client in case of file not found.
-     *
-     * @param clientOutput The pipe to the client.
-     * @param pageRequest  The page requested by the client.
-     */
     private void loadNotFound(PrintWriter clientOutput, String pageRequest) {
         /* Send a 404 and load the not found page for the client. */
         errorHeader(clientOutput);
         pageLoader(pageRequest, clientOutput);
     }
 
-    /**
-     * Sends static html and 200 ok code to the client.
-     *
-     * @param clientOutput The pipe to the client.
-     * @param pageRequest  The page requested by the client.
-     */
     private void loadPage(PrintWriter clientOutput, String pageRequest) {
-        /* Send an ok and load the new order page for the client. */
         textHeader(clientOutput, "html");
         pageLoader(pageRequest, clientOutput);
     }
 
-
-    /**
-     * Sends static html to the client.
-     *
-     * @param pageRequest  The page requested by the client.
-     * @param clientOutput The pipe to the client.
-     */
     synchronized private void pageLoader(String pageRequest, PrintWriter clientOutput) {
         File page = new File(directories.get("pages") + pageRequest + ".html");
         try
@@ -189,13 +120,6 @@ class ClientHandler implements Runnable, Loggable, Database {
         }
     }
 
-    /**
-     * Sends dynamic html to the client.
-     *
-     * @param pageRequest  The page requested by the client.
-     * @param clientOutput The pipe to the client.
-     * @param replacements A map of dynamic replacements to be made.
-     */
     synchronized private void pageLoader(String pageRequest, PrintWriter clientOutput, HashMap<String, String> replacements) {
         File page = new File(rootDirectory + "/pages/" + pageRequest + ".html");
         try
@@ -220,14 +144,6 @@ class ClientHandler implements Runnable, Loggable, Database {
         }
     }
 
-    /**
-     * Sends dynamic html to the client.
-     *
-     * @param pageRequest  The page requested by the client.
-     * @param clientOutput The pipe to the client.
-     * @param replaceThis  The tag to be replaced.
-     * @param withThis     The string to replace the tag.
-     */
     /* Overloaded pageLoader that will replace a single tag to a different value. */
     synchronized private void pageLoader(String pageRequest, PrintWriter clientOutput, String replaceThis, String withThis) {
         File page = new File(rootDirectory + "resources/pages/" + pageRequest + ".html");

@@ -1,9 +1,9 @@
 package gHost;
 
 /**
- * gHost.DataHandler: responsible for the correct routing of incoming and outgoing data from gHost.Database.
+ * DataHandler: responsible for the correct routing of incoming and outgoing data from gHost.Repository.
  */
-class DataHandler implements Database, Loggable {
+class DataHandler implements Repository, Loggable {
     /* Adds each new connection to the clients list. */
     synchronized void addAddress(String ipAddress) {
         if (!connectedIPs.containsKey(ipAddress)) {

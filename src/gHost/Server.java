@@ -5,15 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 /**
- * gHost.Server: represents the outermost layer of a clients connection to the program.
+ * Server: represents the outermost layer of a clients connection to the program.
 */
 public class Server implements Loggable {
 
     /**
      * Start server and allow for outside connections to be routed.
-     *
-     * @param port The port of the server.
-     * @param rootDirectory The location of external files on the computer.
      */
     public void startServer(int port, String rootDirectory) {
         try (ServerSocket server = new ServerSocket(port)) {
@@ -25,14 +22,13 @@ public class Server implements Loggable {
                     Socket client = server.accept();
                     Runnable clientHandler = new ClientHandler(client, rootDirectory);
                     new Thread(clientHandler).start();
-
                 } catch (IOException e) {
                     //Serves to break out of while, exception throw accomplishes the same task.
                     running = false;
                 }
             }
         } catch (IOException e) {
-            /* Gracefully avoid program shutdown by attempting new port.*/
+            /* Gracefully avoid program shutdown by attempting new port. !~ Make sure you check the correct port is used. */
             startServer(port + 1, rootDirectory);
         }
     }
