@@ -4,16 +4,17 @@ import gHost.Server;
 class Runner implements Repository {
     public static void main(String[] args) {
         Server server = new Server();
-        int port = 80; // Default port
-        /*Add Working Directories. */
+        int port = 80;
         /* Directory of resource files (pages, images, scripts, etc.)*/
-        /* !Important, make sure you either pass a directory as an argument, or change the "a" variable here. */
-        String a = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
-        a = a.replace("file:/","");
-        a = a.replace("/out/production/Server/","/resources/");
-        directories.put("root", a);
-        /* Directory of pages to serve, may be part of resources. */
-        directories.put("pages", a);
+
+        /* !Important, make sure you either pass a directory as an argument, or change the "d" variable here. */
+        String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
+        d = d.replace("file:/","");
+        d = d.replace("/out/production/Server/","/resources/");
+        /*Add Working Directories. */
+        directories.put("root", d);
+        /* Pages are in my root directory, this is left as blank - no subdirectory needed. */
+        directories.put("pages", "");
 
         /*Set up Routes*/
         routes.put("/","index");
@@ -25,10 +26,11 @@ class Runner implements Repository {
             case 2:
                 port = Integer.parseInt(args[0]);
                 directories.put("root",args[1]);
-                server.startServer(port, directories.get("root"));
+                server.startServer(port);
                 break;
             default:
-                server.startServer(port, directories.get("root"));
+                server.startServer(port);
+                break;
         }
     }
 }

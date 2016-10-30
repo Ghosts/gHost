@@ -2,7 +2,7 @@ package gHost;
 
 import java.util.logging.Logger;
 
-interface Loggable {
+public interface Loggable {
 
     /**
      * The logger used for logging actions, information, and errors.

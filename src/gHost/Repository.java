@@ -1,5 +1,6 @@
 package gHost;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 /**
@@ -14,4 +15,5 @@ public interface Repository {
     HashMap<String,String> routes = new HashMap<>();
     /* Sets main directories, such as root, resources, etc.*/
     HashMap<String,String> directories = new HashMap<>();
+
 }
