@@ -9,6 +9,7 @@ import java.util.logging.Level;
 */
 public class Server implements Loggable, Repository {
     public static Socket client;
+    public static boolean caseSensitiveRoutes = false;
     /**
      * Start server and allow for outside connections to be routed.
      */

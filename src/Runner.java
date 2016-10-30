@@ -16,11 +16,11 @@ class Runner implements Repository {
         /* Pages are in my root directory, this is left as blank - no subdirectory needed. */
         directories.put("pages", "");
 
-        /*Set up Routes*/
+        /*Set up Routes - not case sensitive by default. */
         routes.put("/","index");
         routes.put("/index","index");
         routes.put("/home","index");
-
+        /* Make Casesensitive by using Server.caseSensitiveRoutes = true;*/
         switch (args.length) {
             /* Two arguments - port and rootDirectory*/
             case 2:

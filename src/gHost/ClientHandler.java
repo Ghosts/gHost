@@ -15,7 +15,6 @@ import java.util.logging.Level;
 
 public class ClientHandler implements Runnable, Loggable, Repository {
     static final AtomicInteger clientCounter = new AtomicInteger(0);
-    private final DataHandler DataHandler = new DataHandler();
     private final Socket client;
     private final PhantomInject PhantomInject = new PhantomInject();
     private PrintWriter clientOutput = null;
@@ -23,7 +22,8 @@ public class ClientHandler implements Runnable, Loggable, Repository {
     ClientHandler(Socket client) {
         this.client = client;
         String ip = client.getRemoteSocketAddress().toString().replaceAll(":.*", "");
-        DataHandler.addAddress(ip);
+        gHost.DataHandler dataHandler = new DataHandler();
+        dataHandler.addAddress(ip);
     }
 
     /* Default Constructor ONLY used for clientOutput write methods. */
@@ -64,6 +64,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
     private void routeFilter(String[] request) {
         String[] queries = StringUtil.formatQuery(request);
         String url = request[1];
+        if(!Server.caseSensitiveRoutes){url = url.toLowerCase();}
         /* Catch all external file calls */
         if (url.contains(".")) {
             loadExternalFile(url);

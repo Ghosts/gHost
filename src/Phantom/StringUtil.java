@@ -11,15 +11,8 @@ public class StringUtil {
 
 
     /* Main function of Phantom - identify Spirits and replace them with dynamic content. */
-   public static String selectReplace(String input, String replaceThis, String withThis) {
+   static String selectReplace(String input, String replaceThis, String withThis) {
         return input.replaceAll(replaceThis, withThis);
-    }
-
-    /* selectReplace for a list of strings to populate. */
-    public static String selectReplace(String input, String replaceThis, ArrayList<String> withThis) {
-        String list = "";
-        for (String s : withThis){list+=s+"\n";}
-        return input.replaceAll(replaceThis, list);
     }
 
     /* Parses query information from the requested URL. */
