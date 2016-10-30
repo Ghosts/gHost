@@ -8,7 +8,7 @@ import java.util.logging.Level;
  * Server: represents the outermost layer of a clients connection to the program.
 */
 public class Server implements Loggable, Repository {
-
+    public static Socket client;
     /**
      * Start server and allow for outside connections to be routed.
      */
@@ -19,7 +19,7 @@ public class Server implements Loggable, Repository {
             while (running) {
                 /* Passes output for each method requiring output access, removed need for class variables */
                 try {
-                    Socket client = server.accept();
+                    client = server.accept();
                     Runnable clientHandler = new ClientHandler(client);
                     new Thread(clientHandler).start();
                 } catch (IOException e) {

@@ -1,12 +1,11 @@
 package gHost;
 
-import Phatnom.PhantomInject;
-import Phatnom.StringUtil;
+import Phantom.PhantomInject;
+import Phantom.StringUtil;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
-import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
@@ -19,11 +18,17 @@ public class ClientHandler implements Runnable, Loggable, Repository {
     private final DataHandler DataHandler = new DataHandler();
     private final Socket client;
     private final PhantomInject PhantomInject = new PhantomInject();
+    private PrintWriter clientOutput = null;
 
     ClientHandler(Socket client) {
         this.client = client;
         String ip = client.getRemoteSocketAddress().toString().replaceAll(":.*", "");
         DataHandler.addAddress(ip);
+    }
+
+    /* Default Constructor ONLY used for clientOutput write methods. */
+    public ClientHandler(){
+        this(Server.client);
     }
 
     /**
@@ -35,59 +40,60 @@ public class ClientHandler implements Runnable, Loggable, Repository {
                 BufferedReader clientInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 PrintWriter clientOutput = new PrintWriter(client.getOutputStream())
         ) {
-            requestHandler(clientInput, clientOutput);
+            this.clientOutput = clientOutput;
+            requestHandler(clientInput);
         } catch (IOException e) {
             logger.log(Level.WARNING, "IOException thrown: " + e);
         }
     }
 
-    private void requestHandler(BufferedReader clientInput, PrintWriter clientOutput) throws IOException {
+    private void requestHandler(BufferedReader clientInput) throws IOException {
         String inp;
         while ((inp = clientInput.readLine()) != null) {
             if ("".equals(inp)) {
                 break;
             } else if (inp.contains("GET")) {
-                routeFilter(inp.split(" "), clientOutput);
+                routeFilter(inp.split(" "));
             } else if (inp.contains("POST")) {
-                badRequestHeader(clientOutput);
+                badRequestHeader();
                 return;
             }
         }
     }
 
-    private void routeFilter(String[] request, PrintWriter clientOutput) {
+    private void routeFilter(String[] request) {
         String[] queries = StringUtil.formatQuery(request);
         String url = request[1];
         /* Catch all external file calls */
         if (url.contains(".")) {
-            loadExternalFile(url, clientOutput);
+            loadExternalFile(url);
             return;
         }
         if (routes.get(url) != null) {
-            loadPage(clientOutput, routes.get(url));
+            loadPage(routes.get(url));
         } else {
-            loadNotFound(clientOutput, "404");
+            loadNotFound();
         }
     }
 
-    private void loadNotFound(PrintWriter clientOutput, String pageRequest) {
+    public void loadNotFound() {
         /* Send a 404 and load the not found page for the client. */
-        errorHeader(clientOutput);
-        pageLoader(pageRequest, clientOutput);
+        errorHeader();
+        pageLoader("404");
     }
 
-    private void loadPage(PrintWriter clientOutput, String pageRequest) {
-        textHeader(clientOutput, "html");
-        pageLoader(pageRequest, clientOutput);
+    private void loadPage(String pageRequest) {
+        textHeader("html");
+        pageLoader(pageRequest);
     }
 
-    synchronized private void pageLoader(String pageRequest, PrintWriter clientOutput) {
+    synchronized private void pageLoader(String pageRequest) {
             /* Perform PhantomInjects before client write*/
             PhantomInject.injectPage(pageRequest,clientOutput);
     }
 
 
-    public static void textHeader(PrintWriter clientOutput, String type) {
+    private void textHeader(String type) {
         clientOutput.println(
                 "HTTP/1.0 200 OK\r\n" +
                         "Content-Type: text/" + type + "\r\n" +
@@ -96,7 +102,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
         clientOutput.flush();
     }
 
-    public static void badRequestHeader(PrintWriter clientOutput) {
+    private void badRequestHeader() {
         clientOutput.println(
                 "HTTP/1.0 400 Bad Request\r\n" +
                         "Connection: close\r\n"
@@ -104,7 +110,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
         clientOutput.flush();
     }
 
-    public static void errorHeader(PrintWriter clientOutput) {
+    private void errorHeader() {
         clientOutput.println(
                 "HTTP/1.0 404 Not Found\r\n" +
                         "Connection: close\r\n"
@@ -112,7 +118,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
         clientOutput.flush();
     }
 
-    public static void imageHeader(PrintWriter clientOutput, String type) {
+    private void imageHeader(String type) {
         clientOutput.println(
                 "HTTP/1.0 200 OK\r\n" +
                         "Content-Type: image/" + type + "\r\n" +
@@ -123,7 +129,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
 
     /* Handles the routing for external files.
     Sends proper headers and identifies file extensions. */
-    private void loadExternalFile(String fileRequested, PrintWriter clientOutput) {
+    private void loadExternalFile(String fileRequested) {
         String filepath;
         filepath = directories.get("root") + "/" + fileRequested;
         String extension = "";
@@ -138,17 +144,17 @@ public class ClientHandler implements Runnable, Loggable, Repository {
             case "jpeg":
             case "jpg":
             case "png":
-                imageHeader(clientOutput, extension);
+                imageHeader(extension);
                 break;
             case "css":
-                textHeader(clientOutput, extension);
+                textHeader(extension);
                 break;
             case "js":
-                textHeader(clientOutput, extension);
+                textHeader(extension);
                 break;
             default:
                 /* Default, assume some form of text. */
-                textHeader(clientOutput, extension);
+                textHeader(extension);
                 return;
         }
         try {

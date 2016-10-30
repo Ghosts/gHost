@@ -1,4 +1,4 @@
-package Phatnom;
+package Phantom;
 
 import java.util.ArrayList;
 

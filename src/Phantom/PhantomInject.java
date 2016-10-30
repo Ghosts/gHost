@@ -1,5 +1,6 @@
-package Phatnom;
+package Phantom;
 
+import gHost.ClientHandler;
 import gHost.Repository;
 import gHost.Loggable;
 import java.io.*;
@@ -27,7 +28,7 @@ public class PhantomInject implements Repository, Loggable  {
             clientOutput.println();
             clientOutput.flush();
         } catch (Exception e) {
-            gHost.ClientHandler.errorHeader(clientOutput);
+            new ClientHandler().loadNotFound();
             logger.log(Level.WARNING, "IOException thrown: " + e);
         }
     }
