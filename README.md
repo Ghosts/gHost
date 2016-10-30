@@ -6,4 +6,4 @@
 ![](http://i.imgur.com/3FgX24L.png)
 ![](http://i.imgur.com/SYXyVWO.png)
 
-![](http://i.imgur.com/dzi0TcB.png)
+![http://caden.io/ghost](http://i.imgur.com/dzi0TcB.png)
