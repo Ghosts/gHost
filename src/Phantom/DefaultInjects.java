@@ -1,5 +1,8 @@
 package Phantom;
 
+import gHost.Server;
+
+import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +32,7 @@ public class DefaultInjects {
         repository.put("<%Time12%>",time12Inject);
         repository.put("<%Time24%>",tim24Inject);
 
-
+        /* Phantom for user IP */
+        repository.put("<%IP%>", (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/",""));
     }
 }
