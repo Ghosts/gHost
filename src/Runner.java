@@ -11,7 +11,6 @@ class Runner implements Repository {
         String a = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
         a = a.replace("file:/","");
         a = a.replace("/out/production/Server/","/resources/");
-        System.out.println(a);
         directories.put("root", a);
         /* Directory of pages to serve, may be part of resources. */
         directories.put("pages", a);
