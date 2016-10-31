@@ -63,6 +63,8 @@ public class ClientHandler implements Runnable, Loggable, Repository {
 
     private void routeFilter(String[] request) {
         String[] queries = StringUtil.formatQuery(request);
+        if(queries.length!=0){
+            System.out.println(queries[0]);}
         String url = request[1];
         if(!Server.caseSensitiveRoutes){url = url.toLowerCase();}
         /* Catch all external file calls */
@@ -90,7 +92,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
 
     synchronized private void pageLoader(String pageRequest) {
             /* Perform PhantomInjects before client write*/
-            PhantomInject.injectPage(pageRequest,clientOutput);
+            PhantomInject.injectPage(pageRequest, clientOutput);
     }
 
 

@@ -4,11 +4,15 @@ import gHost.ClientHandler;
 import gHost.Repository;
 import gHost.Loggable;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PhantomInject implements Repository, Loggable  {
-    private DefaultInjects injects = new DefaultInjects();
-
+    private DefaultInjects DefaultInjects = new DefaultInjects();
+    private PhantomDynamics PhantomDynamics = new PhantomDynamics();
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
         File page = new File(directories.get("root") + directories.get("pages") + pageRequest + ".html");
         try
@@ -18,9 +22,17 @@ public class PhantomInject implements Repository, Loggable  {
                 ) {
             String line;
             while ((line = reader.readLine()) != null) {
-                for (String a : injects.getRepository().keySet() ) {
+                for (String a : DefaultInjects.getRepository().keySet() ) {
                     if (line.contains(a)) {
-                        line = StringUtil.selectReplace(line, a, injects.getRepository().get(a));
+                        if (a.contains("``")){
+                            Pattern p = Pattern.compile("``\\w++");
+                            Matcher m = p.matcher(line);
+                            while (m.find()) {
+                                line = line.replace(m.group(),PhantomDynamics.graveClean(m.group()));
+                            }
+                            line = line.replaceAll("``\\w++","");
+                        }
+                        line = StringUtil.selectReplace(line, a, DefaultInjects.getRepository().get(a));
                     }
                 }
                 clientOutput.println(line);

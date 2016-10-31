@@ -9,7 +9,15 @@ import java.util.logging.Level;
 */
 public class Server implements Loggable, Repository {
     public static Socket client;
-    public static boolean caseSensitiveRoutes = false;
+
+    /* Server Settings */
+    static boolean caseSensitiveRoutes = false;
+    static boolean debugMode = false;
+
+    /* Default to port 80. */
+    public void startServer(){
+        startServer(80);
+    }
     /**
      * Start server and allow for outside connections to be routed.
      */
