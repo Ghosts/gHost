@@ -1,13 +1,17 @@
 package Phantom;
 
-import java.util.ArrayList;
+
+import gHost.Server;
+
+import java.util.Arrays;
+import java.util.logging.Level;
 
 /*
 * Phantom is a templating engine responsible for dynamic interaction
 * with web pages in gHost. Currently Phantom offers minimal features,
 * however development is active and looking for improvements and additions.
 * */
-public class StringUtil {
+public class StringUtil implements gHost.Loggable {
 
 
     /* Main function of Phantom - identify Spirits and replace them with dynamic content. */
@@ -16,7 +20,7 @@ public class StringUtil {
     }
 
     /* Parses query information from the requested URL. */
-   public static String[] formatQuery(String[] request) {
+   public String[] formatQuery(String[] request) {
         if (request[1].contains("?")) {
             String query;
             /* Remove query from URL for it to be passed on to routeFilter */
@@ -32,7 +36,7 @@ public class StringUtil {
                         .replaceAll(".*=", "")
                         .replaceAll("\\+", " ");
             }
-
+            if (Server.debugMode){logger.log(Level.INFO,"URL Query(s) Found: ", Arrays.toString(queries));}
             return queries;
         }
         /* Return nothing if no queries exist, DataHandler will ignore a blank query */
@@ -44,7 +48,6 @@ public class StringUtil {
     public static String toTitleCase(String input) {
         StringBuilder titleCase = new StringBuilder();
         boolean nextTitleCase = true;
-
         for (char c : input.toCharArray()) {
             if (Character.isSpaceChar(c)) {
                 nextTitleCase = true;

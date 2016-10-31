@@ -6,7 +6,11 @@ import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-
+/*
+* Phantom Injects serve as replaceable and dynamic content created through HTML
+* documents. Below are the default injects that are provided with Phantom. Over time
+* these will grow and - hopefully - become more useful.
+* */
 class DefaultInjects {
 
     DefaultInjects(){

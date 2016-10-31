@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/*
+* Phantom Inject contains the methods which identify and replace grave variables
+* into their representations. Injects are limited to basic replacements. Phantom Dynamics
+* handles custom grave variables which may require more complex operations.
+* */
 public class PhantomInject implements Repository, Loggable  {
     private DefaultInjects DefaultInjects = new DefaultInjects();
     private PhantomDynamics PhantomDynamics = new PhantomDynamics();

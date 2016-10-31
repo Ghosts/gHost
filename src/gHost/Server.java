@@ -12,7 +12,7 @@ public class Server implements Loggable, Repository {
 
     /* Server Settings */
     static boolean caseSensitiveRoutes = false;
-    static boolean debugMode = false;
+    public static boolean debugMode = false;
 
     /* Default to port 80. */
     public void startServer(){

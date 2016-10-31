@@ -1,5 +1,7 @@
 package gHost;
 
+import java.util.logging.Level;
+
 /**
  * DataHandler: responsible for the correct routing of incoming and outgoing data from gHost.Repository.
  */
@@ -8,11 +10,13 @@ class DataHandler implements Repository, Loggable {
     synchronized void addAddress(String ipAddress) {
         if (!connectedIPs.containsKey(ipAddress)) {
             connectedIPs.put(ipAddress, ClientHandler.clientCounter.incrementAndGet());
+            if(Server.debugMode){logger.log(Level.INFO,"New Connection From: " + ipAddress);}
         }
     }
 
-    /* Parses Queries based on schema http://gHost.example/?=example */
+    /* Use queries based on what is present */
     synchronized void processQuery(String[] queries, String pageRequest) {
+
     }
 
 }
