@@ -20,7 +20,7 @@ public class StringUtil implements gHost.Loggable {
     }
 
     /* Parses query information from the requested URL. */
-   public String[] formatQuery(String[] request) {
+   public static String[] formatQuery(String[] request) {
         if (request[1].contains("?")) {
             String query;
             /* Remove query from URL for it to be passed on to routeFilter */

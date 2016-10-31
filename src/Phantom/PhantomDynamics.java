@@ -29,7 +29,7 @@ class PhantomDynamics implements Repository {
                 return graveList();
             }
             if (graveIdentified instanceof Map){
-                return graveMap():
+                return graveMap();
             }
             /* Final catch for unknown object operations. */
             return "";
@@ -55,7 +55,7 @@ class PhantomDynamics implements Repository {
 
     private String graveMap(){
         String graveResult = "";
-        Map<Object,Object> graveIdentified = (Map<Object,Object>) graves.get(grave):
+        Map<Object,Object> graveIdentified = (Map<Object,Object>) graves.get(grave);
         for (Map.Entry<Object,Object> e : graveIdentified.entrySet()){
             graveResult += e.getKey() + " : " + e.getValue() + "\n";
         }

@@ -32,7 +32,7 @@ public class PhantomInject implements Repository, Loggable  {
                             Pattern p = Pattern.compile("``\\w++");
                             Matcher m = p.matcher(line);
                             while (m.find()) {
-                                line = line.replace(m.group(),PhantomDynamics.graveClean(m.group()));
+                                line = line.replace(m.group(), (String) PhantomDynamics.graveClean(m.group()));
                             }
                             line = line.replaceAll("``\\w++","");
                         }
