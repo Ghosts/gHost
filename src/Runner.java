@@ -2,6 +2,8 @@ import gHost.Repository;
 import gHost.Server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 class Runner implements Repository {
     public static void main(String[] args) {
@@ -25,7 +27,9 @@ class Runner implements Repository {
 
         /* Set Up Graves */
         graves.put("Phantom_Check","Phantom Dynamics are working correctly.");
-
+        int[] map = new int[4];
+        map[3] = 3;
+        graves.put("Test",map);
         switch (args.length) {
             /* Two arguments - port and rootDirectory*/
             case 2:

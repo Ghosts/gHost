@@ -1,8 +1,10 @@
 package Phantom;
 
 import gHost.Repository;
-import java.util.List;
-import java.util.Map;
+
+import java.lang.reflect.Array;
+import java.math.BigInteger;
+import java.util.*;
 
 /*
 * Phantom Dynamics handles complex grave variables which may require more complicated
@@ -24,14 +26,17 @@ class PhantomDynamics implements Repository {
             if (graveIdentified instanceof String){
                 return graveString();
             }
-            if (graveIdentified instanceof List){
-                return graveList();
+            if (graveIdentified instanceof Iterable){
+                return graveIterate();
             }
-            if (graveIdentified instanceof Map){
-                return graveMap();
+            if (graveIdentified instanceof Number){
+                return graveNumber();
             }
-            /* Final catch for unknown object operations. */
-            return "";
+            if (graveIdentified instanceof Array[]){
+                return graveArray();
+            }
+            /* If not identified, assume a toString() method exists. */
+            return graves.get(grave).toString();
         }
         /* Remove grave variable if it is not defined. */
         else {
@@ -44,19 +49,21 @@ class PhantomDynamics implements Repository {
             return (String) graves.get(grave);
     }
 
-    private String graveList(){
-        String graveResult = "";
-        for (Object o : (List) graves.get(grave)) {
-            graveResult += "<br/>" + o.toString();
-        }
-        return graveResult;
+    private String graveIterate(){
+        Iterable graveIdentified = (Iterable) graves.get(grave);
+        final String[] graveIterate = {""};
+        graveIdentified.forEach(o -> graveIterate[0] += o.toString()+ ", ");
+        return graveIterate[0];
     }
 
-    private String graveMap(){
+    private String graveNumber() {
+        return graves.get(grave).toString();
+    }
+
+    private String graveArray() {
         String graveResult = "";
-        Map<Object,Object> graveIdentified = (Map<Object,Object>) graves.get(grave);
-        for (Map.Entry<Object,Object> e : graveIdentified.entrySet()){
-            graveResult += "<br/>" + e.getKey() + " : " + e.getValue();
+        for (int i = 0; i < ((Array[]) graves.get(grave)).length - 1 ; i++) {
+            graveResult += ((Array[]) graves.get(grave))[i].toString() + " ,";
         }
         return graveResult;
     }
