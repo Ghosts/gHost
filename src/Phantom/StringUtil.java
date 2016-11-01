@@ -13,12 +13,6 @@ import java.util.logging.Level;
 * */
 public class StringUtil implements gHost.Loggable {
 
-
-    /* Main function of Phantom - identify Spirits and replace them with dynamic content. */
-   static String selectReplace(String input, String replaceThis, String withThis) {
-        return input.replaceAll(replaceThis, withThis);
-    }
-
     /* Parses query information from the requested URL. */
    public static String[] formatQuery(String[] request) {
         if (request[1].contains("?")) {

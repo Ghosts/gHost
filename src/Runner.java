@@ -1,6 +1,8 @@
 import gHost.Repository;
 import gHost.Server;
 
+import java.util.ArrayList;
+
 class Runner implements Repository {
     public static void main(String[] args) {
         Server server = new Server();
@@ -24,7 +26,12 @@ class Runner implements Repository {
 
         /* Set Up Graves */
         graves.put("Phantom_Check","Phantom Dynamics are working correctly.");
-
+        ArrayList<String> list = new ArrayList<>();
+        list.add("This");
+        list.add("is");
+        list.add("dynamically");
+        list.add("generated.");
+        graves.put("List", list);
         switch (args.length) {
             /* Two arguments - port and rootDirectory*/
             case 2:

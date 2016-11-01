@@ -1,7 +1,6 @@
 package Phantom;
 
 import gHost.Repository;
-
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +47,7 @@ class PhantomDynamics implements Repository {
     private String graveList(){
         String graveResult = "";
         for (Object o : (List) graves.get(grave)) {
-            graveResult += o +"\n";
+            graveResult += o.toString() + System.getProperty("line.separator");
         }
         return graveResult;
     }

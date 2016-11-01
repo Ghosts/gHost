@@ -27,17 +27,14 @@ public class PhantomInject implements Repository, Loggable  {
             String line;
             while ((line = reader.readLine()) != null) {
                 for (String a : DefaultInjects.getRepository().keySet() ) {
-                    if (line.contains(a)) {
                         if (a.contains("``")){
                             Pattern p = Pattern.compile("``\\w++");
                             Matcher m = p.matcher(line);
                             while (m.find()) {
                                 line = line.replace(m.group(), (String) PhantomDynamics.graveClean(m.group()));
                             }
-                            line = line.replaceAll("``\\w++","");
                         }
-                        line = StringUtil.selectReplace(line, a, DefaultInjects.getRepository().get(a));
-                    }
+                        line = line.replace(a, DefaultInjects.getRepository().get(a));
                 }
                 clientOutput.println(line);
             }
