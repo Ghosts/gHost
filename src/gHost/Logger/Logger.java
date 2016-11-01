@@ -17,12 +17,18 @@ public class Logger {
         switch(level){
             case INFO:
                 System.out.println(ANSI_PURPLE + level + ANSI_RESET + ": "+date+"\n"+ ANSI_CYAN + message + ANSI_RESET);
+                System.out.println("Calling class: " + new Exception().getStackTrace()[1].getClassName()
+                        + " from method: " + new Exception().getStackTrace()[1].getMethodName());
                 break;
             case WARNING:
                 System.out.println(ANSI_GREEN + level + ANSI_RESET + ": "+date+"\n"+ ANSI_BLUE + message + ANSI_RESET);
+                System.out.println("Calling class: " + new Exception().getStackTrace()[1].getClassName()
+                        + " from method: " + new Exception().getStackTrace()[1].getMethodName());
                 break;
             case ERROR:
                 System.out.println(ANSI_RED + level + ANSI_RESET + ": "+date+"\n"+ ANSI_YELLOW + message + ANSI_RESET);
+                System.out.println("Calling class: " + new Exception().getStackTrace()[1].getClassName()
+                        + " from method: " + new Exception().getStackTrace()[1].getMethodName());
                 break;
             default:
                 break;
