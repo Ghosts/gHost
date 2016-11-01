@@ -102,6 +102,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
         clientOutput.println(
                 "HTTP/1.0 200 OK\r\n" +
                         "Content-Type: text/" + type + "\r\n" +
+                        "Connection: Powered by gHost v0.05b.\r\n"
         );
         clientOutput.flush();
     }
