@@ -1,12 +1,13 @@
 package Phantom;
 
 import gHost.ClientHandler;
+import gHost.Logger.Level;
+import gHost.Logger.Logger;
 import gHost.Repository;
-import gHost.Loggable;
+import gHost.Logger.Loggable;
+import gHost.Server;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /*
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 * into their representations. Injects are limited to basic replacements. Phantom Dynamics
 * handles custom grave variables which may require more complex operations.
 * */
-public class PhantomInject implements Repository, Loggable  {
+public class PhantomInject implements Repository  {
     private DefaultInjects DefaultInjects = new DefaultInjects();
     private PhantomDynamics PhantomDynamics = new PhantomDynamics();
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
@@ -26,15 +27,19 @@ public class PhantomInject implements Repository, Loggable  {
                 ) {
             String line;
             while ((line = reader.readLine()) != null) {
-                for (String a : DefaultInjects.getRepository().keySet() ) {
-                        if (a.contains("``")){
-                            Pattern p = Pattern.compile("``\\w++");
-                            Matcher m = p.matcher(line);
-                            while (m.find()) {
-                                line = line.replace(m.group(), (String) PhantomDynamics.graveClean(m.group()));
+                if(Server.enablePhantom) {
+                    for (String a : DefaultInjects.getRepository().keySet()) {
+                        if(Server.enableGraves) {
+                            if (a.contains("``")) {
+                                Pattern p = Pattern.compile("``\\w++");
+                                Matcher m = p.matcher(line);
+                                while (m.find()) {
+                                    line = line.replace(m.group(), (String) PhantomDynamics.graveClean(m.group()));
+                                }
                             }
                         }
                         line = line.replace(a, DefaultInjects.getRepository().get(a));
+                    }
                 }
                 clientOutput.println(line);
             }
@@ -42,7 +47,7 @@ public class PhantomInject implements Repository, Loggable  {
             clientOutput.flush();
         } catch (Exception e) {
             new ClientHandler().loadNotFound();
-            logger.log(Level.WARNING, "IOException thrown: " + e);
+            Logger.log(Level.WARNING, "IOException thrown: " + e);
         }
     }
 }

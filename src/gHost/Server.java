@@ -1,18 +1,24 @@
 package gHost;
 
+import Phantom.FileUtil;
+import gHost.Logger.Level;
+import gHost.Logger.Loggable;
+import gHost.Logger.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
 /**
  * Server: represents the outermost layer of a clients connection to the program.
 */
-public class Server implements Loggable, Repository {
+public class Server implements Repository {
     public static Socket client;
-
     /* Server Settings */
-    static boolean caseSensitiveRoutes = false;
-    public static boolean debugMode = false;
+    public static boolean caseSensitiveRoutes; //Allows URL requests to be of any capitalization
+    public static boolean debugMode; //Enables additional logging information for debugging
+    public static boolean fileCompressor; //Reduces file size of HTML, CSS & JavaScript files
+    public static boolean enablePhantom;
+    public static boolean enableGraves;
 
     /* Default to port 80. */
     public void startServer(){
@@ -24,10 +30,12 @@ public class Server implements Loggable, Repository {
     public void startServer(int port) {
         try (ServerSocket server = new ServerSocket(port)) {
             boolean running = true;
-            logger.log(Level.INFO, "gHost.Server started on port: " + port);
+            Logger.log(Level.INFO, "gHost.Server started on port: " + port);
+            if(debugMode){directories.forEach((k,v) -> Logger.log(Level.INFO,"Directory: "+ k + " Path: " + v));}
             while (running) {
                 /* Passes output for each method requiring output access, removed need for class variables */
                 try {
+                    if(fileCompressor){FileUtil.compressFiles();}
                     client = server.accept();
                     Runnable clientHandler = new ClientHandler(client);
                     new Thread(clientHandler).start();

@@ -2,19 +2,20 @@ package gHost;
 
 import Phantom.PhantomInject;
 import Phantom.StringUtil;
+import gHost.Logger.Level;
+import gHost.Logger.Logger;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
 
 /**
  * ClientHandler: responsible for the correct routing of client on connect and request.
 */
 
-public class ClientHandler implements Runnable, Loggable, Repository {
+public class ClientHandler implements Runnable, Repository {
     static final AtomicInteger clientCounter = new AtomicInteger(0);
     private final Socket client;
     private final PhantomInject PhantomInject = new PhantomInject();
@@ -44,7 +45,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
             this.clientOutput = clientOutput;
             requestHandler(clientInput);
         } catch (IOException e) {
-            logger.log(Level.WARNING, "IOException thrown: " + e);
+            Logger.log(Level.WARNING, "IOException thrown: " + e);
         }
     }
 
@@ -67,7 +68,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
         if(queries.length!=0){
             System.out.println(queries[0]);}
         String url = request[1];
-        if(Server.debugMode){logger.log(Level.INFO,"Route Request: " + url);}
+        if(Server.debugMode){Logger.log(Level.INFO,"Route Request: " + url);}
         if(!Server.caseSensitiveRoutes){url = url.toLowerCase();}
         /* Catch all external file calls */
         if (url.contains(".")) {
@@ -167,7 +168,7 @@ public class ClientHandler implements Runnable, Loggable, Repository {
             byte[] array = Files.readAllBytes(file.toPath());
             client.getOutputStream().write(array, 0, array.length);
         } catch (IOException e) {
-            logger.log(Level.WARNING, e.toString());
+            Logger.log(Level.WARNING, e.toString());
         }
     }
 }

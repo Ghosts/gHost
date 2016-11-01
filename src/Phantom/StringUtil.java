@@ -1,17 +1,19 @@
 package Phantom;
 
 
+import gHost.Logger.Level;
+import gHost.Logger.Loggable;
+import gHost.Logger.Logger;
 import gHost.Server;
 
 import java.util.Arrays;
-import java.util.logging.Level;
 
 /*
 * Phantom is a templating engine responsible for dynamic interaction
 * with web pages in gHost. Currently Phantom offers minimal features,
 * however development is active and looking for improvements and additions.
 * */
-public class StringUtil implements gHost.Loggable {
+public class StringUtil {
 
     /* Parses query information from the requested URL. */
    public static String[] formatQuery(String[] request) {
@@ -30,7 +32,7 @@ public class StringUtil implements gHost.Loggable {
                         .replaceAll(".*=", "")
                         .replaceAll("\\+", " ");
             }
-            if (Server.debugMode){logger.log(Level.INFO,"URL Query(s) Found: ", Arrays.toString(queries));}
+            if (Server.debugMode){Logger.log(Level.INFO,"URL Query(s) Found: " + Arrays.toString(queries));}
             return queries;
         }
         /* Return nothing if no queries exist, DataHandler will ignore a blank query */

@@ -16,6 +16,7 @@ class DefaultInjects {
     DefaultInjects(){
         addDefaults();
     }
+
     private static HashMap<String,String> repository = new HashMap<>();
     HashMap<String,String> getRepository(){
         return repository;
@@ -39,7 +40,7 @@ class DefaultInjects {
         /* Phantom for user IP */
         repository.put("<%IP%>", (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/",""));
 
-        /* Phantom Dynamics Checker */
+        /* Phantom graves Checker */
         repository.put("``","");
     }
 }

@@ -3,8 +3,6 @@ package Phantom;
 import gHost.Repository;
 
 import java.lang.reflect.Array;
-import java.math.BigInteger;
-import java.util.*;
 
 /*
 * Phantom Dynamics handles complex grave variables which may require more complicated
@@ -46,7 +44,14 @@ class PhantomDynamics implements Repository {
 
     /* Return the string value of a grave variable. Empty string if the grace does not exist. */
     private String graveString(){
+            if(graves.get(grave).toString().contains("Fragment:")){
+
+            }
             return (String) graves.get(grave);
+    }
+
+    private String graveFragment(){
+            return "";
     }
 
     private String graveIterate(){

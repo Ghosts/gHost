@@ -8,13 +8,20 @@ import java.util.Map;
 class Runner implements Repository {
     public static void main(String[] args) {
         Server server = new Server();
+
         /* Server settings */
+        Server.caseSensitiveRoutes = true; //Allows URL requests to be of any capitalization
+        Server.debugMode = true; //Enables additional logging information for debugging
+        Server.fileCompressor = false; //Reduces file size of HTML, CSS & JavaScript files
+        Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
+        Server.enableGraves = true;//If disabled, Phantom Defaults will work, but Grave variables will not.
 
         /* Directory of resource files (pages, images, scripts, etc.)*/
         /* !Important, make sure you either pass a directory as an argument, or change the "d" variable here. */
         String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
         d = d.replace("file:/","");
         d = d.replace("/out/production/gHost/", "/resources/");
+
         /*Add Working Directories. */
         directories.put("root", d);
         /* Pages are in my root directory, this is left as blank - no subdirectory needed. */
@@ -27,9 +34,8 @@ class Runner implements Repository {
 
         /* Set Up Graves */
         graves.put("Phantom_Check","Phantom Dynamics are working correctly.");
-        int[] map = new int[4];
-        map[3] = 3;
-        graves.put("Test",map);
+
+        /* Start server after settings, routes, graves, etc. */
         switch (args.length) {
             /* Two arguments - port and rootDirectory*/
             case 2:
