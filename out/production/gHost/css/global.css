@@ -47,7 +47,6 @@ h2 {
     font-size: 0.9em;
     background-color:#18003C;
     color:white;
-    margin-top:35px;
 }
 .button:hover {
     background-color: #2a006c;
@@ -75,4 +74,8 @@ pre {
     margin: 0 auto;
     text-align:left !important;
     padding-left:75px;
+}
+
+.logos img:nth-child(2) {
+    padding-left: 50px;
 }

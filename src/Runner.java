@@ -12,8 +12,7 @@ class Runner implements Repository {
         /* !Important, make sure you either pass a directory as an argument, or change the "d" variable here. */
         String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
         d = d.replace("file:/","");
-        d = d.replace("/out/production/Server/","/resources/");
-
+        d = d.replace("/out/production/gHost/", "/resources/");
         /*Add Working Directories. */
         directories.put("root", d);
         /* Pages are in my root directory, this is left as blank - no subdirectory needed. */
@@ -26,12 +25,7 @@ class Runner implements Repository {
 
         /* Set Up Graves */
         graves.put("Phantom_Check","Phantom Dynamics are working correctly.");
-        ArrayList<String> list = new ArrayList<>();
-        list.add("This");
-        list.add("is");
-        list.add("dynamically");
-        list.add("generated.");
-        graves.put("List", list);
+
         switch (args.length) {
             /* Two arguments - port and rootDirectory*/
             case 2:

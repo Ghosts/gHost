@@ -47,7 +47,7 @@ class PhantomDynamics implements Repository {
     private String graveList(){
         String graveResult = "";
         for (Object o : (List) graves.get(grave)) {
-            graveResult += o.toString() + System.getProperty("line.separator");
+            graveResult += "<br/>" + o.toString();
         }
         return graveResult;
     }
@@ -56,7 +56,7 @@ class PhantomDynamics implements Repository {
         String graveResult = "";
         Map<Object,Object> graveIdentified = (Map<Object,Object>) graves.get(grave);
         for (Map.Entry<Object,Object> e : graveIdentified.entrySet()){
-            graveResult += e.getKey() + " : " + e.getValue() + "\n";
+            graveResult += "<br/>" + e.getKey() + " : " + e.getValue();
         }
         return graveResult;
     }
