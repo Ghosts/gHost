@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 * handles custom grave variables which may require more complex operations.
 * */
 public class PhantomInject implements Repository  {
-    private DefaultInjects DefaultInjects = new DefaultInjects();
     private PhantomDynamics PhantomDynamics = new PhantomDynamics();
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
         File page = new File(directories.get("root") + directories.get("pages") + pageRequest + ".html");
@@ -28,7 +27,7 @@ public class PhantomInject implements Repository  {
             String line;
             while ((line = reader.readLine()) != null) {
                 if(Server.enablePhantom) {
-                    for (String a : DefaultInjects.getRepository().keySet()) {
+                    for (String a : defaultInjects.keySet()) {
                         if(Server.enableGraves) {
                             if (a.contains("``")) {
                                 Pattern p = Pattern.compile("``\\w++");
@@ -38,7 +37,7 @@ public class PhantomInject implements Repository  {
                                 }
                             }
                         }
-                        line = line.replace(a, DefaultInjects.getRepository().get(a));
+                        line = line.replace(a, defaultInjects.get(a));
                     }
                 }
                 clientOutput.println(line);

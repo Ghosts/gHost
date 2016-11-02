@@ -1,8 +1,7 @@
 package gHost;
 
-import Phantom.FileUtil;
+import Phantom.FileUtils;
 import gHost.Logger.Level;
-import gHost.Logger.Loggable;
 import gHost.Logger.Logger;
 
 import java.io.IOException;
@@ -32,10 +31,10 @@ public class Server implements Repository {
             boolean running = true;
             Logger.log(Level.INFO, "gHost.Server started on port: " + port);
             if(debugMode){directories.forEach((k,v) -> Logger.log(Level.INFO,"Directory: "+ k + " Path: " + v));}
+            if(fileCompressor){new FileUtils().compressFiles(directories.get("root"));}
             while (running) {
                 /* Passes output for each method requiring output access, removed need for class variables */
                 try {
-                    if(fileCompressor){FileUtil.compressFiles();}
                     client = server.accept();
                     Runnable clientHandler = new ClientHandler(client);
                     new Thread(clientHandler).start();

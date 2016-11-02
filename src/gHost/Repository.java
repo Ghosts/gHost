@@ -17,4 +17,7 @@ public interface Repository {
     HashMap<String,String> directories = new HashMap<>();
     /* Collection of Graves and their respective values. */
     HashMap<String, Object> graves = new HashMap<>();
+    /* Default Phantom Injects */
+    HashMap<String,String> defaultInjects = new HashMap<>();
+
 }

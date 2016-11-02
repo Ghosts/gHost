@@ -11,8 +11,8 @@ class Runner implements Repository {
 
         /* Server settings */
         Server.caseSensitiveRoutes = true; //Allows URL requests to be of any capitalization
-        Server.debugMode = true; //Enables additional logging information for debugging
-        Server.fileCompressor = false; //Reduces file size of HTML, CSS & JavaScript files
+        Server.debugMode = false; //Enables additional logging information for debugging
+        Server.fileCompressor = true; //Reduces file size of HTML, CSS & JavaScript files
         Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
         Server.enableGraves = true;//If disabled, Phantom Defaults will work, but Grave variables will not.
 

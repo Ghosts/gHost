@@ -1,7 +1,7 @@
 package gHost;
 
 import Phantom.PhantomInject;
-import Phantom.StringUtil;
+import Phantom.StringUtils;
 import gHost.Logger.Level;
 import gHost.Logger.Logger;
 
@@ -64,7 +64,7 @@ public class ClientHandler implements Runnable, Repository {
     }
 
     private void routeFilter(String[] request) {
-        String[] queries = StringUtil.formatQuery(request);
+        String[] queries = StringUtils.formatQuery(request);
         if(queries.length!=0){
             System.out.println(queries[0]);}
         String url = request[1];

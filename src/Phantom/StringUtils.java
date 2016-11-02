@@ -13,7 +13,7 @@ import java.util.Arrays;
 * with web pages in gHost. Currently Phantom offers minimal features,
 * however development is active and looking for improvements and additions.
 * */
-public class StringUtil {
+public class StringUtils {
 
     /* Parses query information from the requested URL. */
    public static String[] formatQuery(String[] request) {
