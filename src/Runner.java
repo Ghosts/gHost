@@ -1,3 +1,4 @@
+import Phantom.DefaultInjects;
 import gHost.Repository;
 import gHost.Server;
 
@@ -12,9 +13,9 @@ class Runner implements Repository {
         /* Server settings */
         Server.caseSensitiveRoutes = true; //Allows URL requests to be of any capitalization
         Server.debugMode = false; //Enables additional logging information for debugging
-        Server.fileCompressor = true; //Reduces file size of HTML, CSS & JavaScript files
+        Server.fileCompressor = false; //Reduces file size of HTML, CSS & JavaScript files
         Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
-        Server.enableGraves = true;//If disabled, Phantom Defaults will work, but Grave variables will not.
+        Server.enableGraves = true; //If disabled, Phantom Defaults will work, but Grave variables will not.
 
         /* Directory of resource files (pages, images, scripts, etc.)*/
         /* !Important, make sure you either pass a directory as an argument, or change the "d" variable here. */
@@ -41,6 +42,12 @@ class Runner implements Repository {
             case 2:
                 int port = Integer.parseInt(args[0]);
                 directories.put("root",args[1]);
+                server.startServer(port);
+                break;
+            case 3:
+                port = Integer.parseInt(args[0]);
+                directories.put("root", args[1]);
+                directories.put("pages", args[2]);
                 server.startServer(port);
                 break;
             default:

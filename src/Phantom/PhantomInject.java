@@ -43,10 +43,11 @@ public class PhantomInject implements Repository  {
                 clientOutput.println(line);
             }
             clientOutput.println();
-            clientOutput.flush();
         } catch (Exception e) {
             new ClientHandler().loadNotFound();
             Logger.log(Level.WARNING, "IOException thrown: " + e);
+        } finally {
+            clientOutput.flush();
         }
     }
 }

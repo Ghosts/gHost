@@ -12,9 +12,9 @@ import java.util.HashMap;
 * documents. Below are the default injects that are provided with Phantom. Over time
 * these will grow and - hopefully - become more useful.
 * */
-class DefaultInjects implements Repository {
+public class DefaultInjects implements Repository {
 
-    DefaultInjects(){
+    public DefaultInjects(){
         addDefaults();
     }
 

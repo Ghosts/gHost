@@ -2,7 +2,6 @@ package Phantom;
 
 
 import gHost.Logger.Level;
-import gHost.Logger.Loggable;
 import gHost.Logger.Logger;
 import gHost.Server;
 

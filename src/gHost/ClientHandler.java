@@ -1,5 +1,6 @@
 package gHost;
 
+import Phantom.DefaultInjects;
 import Phantom.PhantomInject;
 import Phantom.StringUtils;
 import gHost.Logger.Level;
@@ -22,6 +23,7 @@ public class ClientHandler implements Runnable, Repository {
     private PrintWriter clientOutput = null;
 
     ClientHandler(Socket client) {
+        new DefaultInjects(); // Populate Default Injects -- TODO: find better instantiation spot.
         this.client = client;
         String ip = (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/","");
         gHost.DataHandler dataHandler = new DataHandler();

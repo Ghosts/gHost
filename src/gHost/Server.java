@@ -1,5 +1,6 @@
 package gHost;
 
+import Phantom.DefaultInjects;
 import Phantom.FileUtils;
 import gHost.Logger.Level;
 import gHost.Logger.Logger;
@@ -12,6 +13,7 @@ import java.net.Socket;
 */
 public class Server implements Repository {
     public static Socket client;
+
     /* Server Settings */
     public static boolean caseSensitiveRoutes; //Allows URL requests to be of any capitalization
     public static boolean debugMode; //Enables additional logging information for debugging
