@@ -18,17 +18,20 @@ class Runner implements Repository {
         Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
         Server.enableGraves = true; //If disabled, Phantom Defaults will work, but Grave variables will not.
 
-        /* Directory of resource files (pages, images, scripts, etc.)*/
-        /* !Important, make sure you either pass a directory as an argument, or change the "d" variable here. */
         String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
         d = d.replace("file:/","");
         d = d.replace("/out/production/gHost/", "/");
 
         /*Add Working Directories. */
+        /* Root directory is for where ALL gHost files are located. */
         directories.put("root", d);
-        /* Pages are in my root directory, this is left as blank - no subdirectory needed. */
         d = d + "resources/";
+        /* Resources should be where images, js, css, html, etc. are located. */
         directories.put("resources", d);
+        /* If pages are not saved within resources, add the subdirectory path to append to resources */
+        directories.put("pages","");
+        /* Directory for location of fragments */
+        directories.put("fragments", directories.get("root") + "src/Phantom/Fragments/");
 
         /*Set up Routes - not case sensitive by default. */
         routes.put("/","index");

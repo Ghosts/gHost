@@ -72,10 +72,10 @@ public class FileUtils implements Repository {
            }
        }
 
-    static String fragmentString(String path, Charset encoding)
+    static String fragmentString(String fileName, Charset encoding)
             throws IOException
     {
-        byte[] encoded = Files.readAllBytes(Paths.get(directories.get("root")+"src/Phantom/Fragments/"+path+".html"));
+        byte[] encoded = Files.readAllBytes(Paths.get(directories.get("fragments") + fileName + ".html"));
         return new String(encoded, encoding);
     }
 }

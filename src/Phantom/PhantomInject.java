@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class PhantomInject implements Repository  {
     private PhantomDynamics PhantomDynamics = new PhantomDynamics();
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
-        File page = new File(directories.get("resources") + pageRequest + ".html");
+        File page = new File(directories.get("resources") + directories.get("pages") + pageRequest + ".html");
         try
                 (
                         FileInputStream in = new FileInputStream(page);
