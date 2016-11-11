@@ -17,19 +17,25 @@ class Runner implements Repository {
         Server.fileCompressor = false; //Reduces file size of HTML, CSS & JavaScript files
         Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
         Server.enableGraves = true; //If disabled, Phantom Defaults will work, but Grave variables will not.
-        Server.persistentData = true; //If enabled, dynamic Graves & repository data is saved and loaded on each restart.
+        Server.persistentData = false; //If enabled, dynamic Graves & repository data is saved and loaded on each restart.
         if (Server.persistentData) {
+            /* Shutdown Hook to save data on close */
             Runtime.getRuntime().addShutdownHook(
                     new Thread("gHostData") {
                         @Override
                         public void run() {
                             try {
-                                FileUtils.createTempData();
+                                FileUtils.creategHostData();
                             } catch (IOException e) {
                                 Logger.log(Level.ERROR, e.toString());
                             }
                         }
                     });
+            try {
+                FileUtils.loadgHostData();
+            } catch (IOException e) {
+                Logger.log(Level.ERROR,e.toString());
+            }
         }
         String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
         d = d.replace("file:/", "");
@@ -45,7 +51,7 @@ class Runner implements Repository {
         directories.put("pages", "");
         /* Directory for location of fragments */
         directories.put("fragments", directories.get("root") + "src/Phantom/Fragments/");
-
+        directories.put("dynamics", directories.get("root") + "src/Phantom/Dynamics");
         /*Set up Routes - not case sensitive by default. */
         routes.put("/", "index");
         routes.put("/index", "index");
