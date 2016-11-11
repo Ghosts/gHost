@@ -5,6 +5,9 @@ import gHost.Logger.Level;
 import gHost.Logger.Logger;
 import gHost.Repository;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileUtils implements Repository {
 
@@ -62,10 +65,17 @@ public class FileUtils implements Repository {
                    line = line.replace(" ","");
                    writer.write(line);
                }
-               defaultInjects.put(initial.getName(),compressed.getName());
+               defaultInjects.put(initial.getName(), compressed.getName());
            } catch (Exception e) {
                new ClientHandler().loadNotFound();
                Logger.log(Level.WARNING, "IOException thrown: " + e);
            }
        }
+
+    static String fragmentString(String path, Charset encoding)
+            throws IOException
+    {
+        byte[] encoded = Files.readAllBytes(Paths.get(directories.get("root")+"src/Phantom/Fragments/"+path+".html"));
+        return new String(encoded, encoding);
+    }
 }

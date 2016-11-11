@@ -1,7 +1,6 @@
 package gHost;
 
 import gHost.Logger.Level;
-import gHost.Logger.Loggable;
 import gHost.Logger.Logger;
 
 /**

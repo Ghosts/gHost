@@ -37,6 +37,9 @@ public class DefaultInjects implements Repository {
         /* Phantom for user IP */
         defaultInjects.put("<%IP%>", (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/",""));
 
+        /* Phantom for Fragment Inject */
+        defaultInjects.put("<%Fragment%>", "");
+
         /* Phantom graves Checker */
         defaultInjects.put("``","");
     }

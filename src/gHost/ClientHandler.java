@@ -139,7 +139,7 @@ public class ClientHandler implements Runnable, Repository {
     Sends proper headers and identifies file extensions. */
     private void loadExternalFile(String fileRequested) {
         String filepath;
-        filepath = directories.get("root") + "/" + fileRequested;
+        filepath = directories.get("resources") + "/" + fileRequested;
         String extension = "";
         int i = filepath.lastIndexOf('.');
         if (i > 0) {

@@ -33,7 +33,7 @@ public class Server implements Repository {
             boolean running = true;
             Logger.log(Level.INFO, "gHost.Server started on port: " + port);
             if(debugMode){directories.forEach((k,v) -> Logger.log(Level.INFO,"Directory: "+ k + " Path: " + v));}
-            if(fileCompressor){new FileUtils().compressFiles(directories.get("root"));}
+            if(fileCompressor){new FileUtils().compressFiles(directories.get("resources"));}
             while (running) {
                 /* Passes output for each method requiring output access, removed need for class variables */
                 try {

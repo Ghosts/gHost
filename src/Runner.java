@@ -11,6 +11,7 @@ class Runner implements Repository {
         Server server = new Server();
 
         /* Server settings */
+        //IMPORTANT: These settings may not be 100% stable. Please refer to documentation.
         Server.caseSensitiveRoutes = true; //Allows URL requests to be of any capitalization
         Server.debugMode = false; //Enables additional logging information for debugging
         Server.fileCompressor = false; //Reduces file size of HTML, CSS & JavaScript files
@@ -21,12 +22,13 @@ class Runner implements Repository {
         /* !Important, make sure you either pass a directory as an argument, or change the "d" variable here. */
         String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
         d = d.replace("file:/","");
-        d = d.replace("/out/production/gHost/", "/resources/");
+        d = d.replace("/out/production/gHost/", "/");
 
         /*Add Working Directories. */
         directories.put("root", d);
         /* Pages are in my root directory, this is left as blank - no subdirectory needed. */
-        directories.put("pages", "");
+        d = d + "resources/";
+        directories.put("resources", d);
 
         /*Set up Routes - not case sensitive by default. */
         routes.put("/","index");
@@ -47,7 +49,7 @@ class Runner implements Repository {
             case 3:
                 port = Integer.parseInt(args[0]);
                 directories.put("root", args[1]);
-                directories.put("pages", args[2]);
+                directories.put("resources", args[2]);
                 server.startServer(port);
                 break;
             default:

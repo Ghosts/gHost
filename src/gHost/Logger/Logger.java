@@ -16,19 +16,19 @@ public class Logger {
         Date date = new Date();
         switch(level){
             case INFO:
-                System.out.println(ANSI_PURPLE + level + ANSI_RESET + ": "+date+"\n"+ ANSI_CYAN + message + ANSI_RESET);
-                System.out.println("Calling class: " + new Exception().getStackTrace()[1].getClassName()
-                        + " from method: " + new Exception().getStackTrace()[1].getMethodName());
+                System.out.print(ANSI_PURPLE + level + ANSI_RESET + ": " + date + "\r\n" + ANSI_CYAN + message + ". " + ANSI_RESET);
+                System.out.print("Calling class: " + new Exception().getStackTrace()[1].getClassName()
+                        + " from method: " + new Exception().getStackTrace()[1].getMethodName() + "\r\n");
                 break;
             case WARNING:
-                System.out.println(ANSI_GREEN + level + ANSI_RESET + ": "+date+"\n"+ ANSI_BLUE + message + ANSI_RESET);
-                System.out.println("Calling class: " + new Exception().getStackTrace()[1].getClassName()
-                        + " from method: " + new Exception().getStackTrace()[1].getMethodName());
+                System.out.print(ANSI_GREEN + level + ANSI_RESET + ": " + date + "\r\n" + ANSI_BLUE + message + ". " + ANSI_RESET);
+                System.out.print("Calling class: " + new Exception().getStackTrace()[1].getClassName()
+                        + " from method: " + new Exception().getStackTrace()[1].getMethodName() + "\r\n");
                 break;
             case ERROR:
-                System.out.println(ANSI_RED + level + ANSI_RESET + ": "+date+"\n"+ ANSI_YELLOW + message + ANSI_RESET);
-                System.out.println("Calling class: " + new Exception().getStackTrace()[1].getClassName()
-                        + " from method: " + new Exception().getStackTrace()[1].getMethodName());
+                System.out.print(ANSI_RED + level + ANSI_RESET + ": " + date + "\r\n" + ANSI_YELLOW + message + ". " + ANSI_RESET);
+                System.out.print("Calling class: " + new Exception().getStackTrace()[1].getClassName()
+                        + " from method: " + new Exception().getStackTrace()[1].getMethodName() + "\r\n");
                 break;
             default:
                 break;

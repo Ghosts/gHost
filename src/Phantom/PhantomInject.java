@@ -4,10 +4,10 @@ import gHost.ClientHandler;
 import gHost.Logger.Level;
 import gHost.Logger.Logger;
 import gHost.Repository;
-import gHost.Logger.Loggable;
 import gHost.Server;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 /*
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class PhantomInject implements Repository  {
     private PhantomDynamics PhantomDynamics = new PhantomDynamics();
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
-        File page = new File(directories.get("root") + directories.get("pages") + pageRequest + ".html");
+        File page = new File(directories.get("resources") + pageRequest + ".html");
         try
                 (
                         FileInputStream in = new FileInputStream(page);
@@ -36,6 +36,11 @@ public class PhantomInject implements Repository  {
                                     line = line.replace(m.group(), (String) PhantomDynamics.graveClean(m.group()));
                                 }
                             }
+                        }
+                        if(line.contains("<%Fragment%>")) {
+                            String fileName = line.replace("<%Fragment%>","");
+                            fileName = fileName.replaceAll("\\s","");
+                            line = FileUtils.fragmentString(fileName, Charset.defaultCharset());
                         }
                         line = line.replace(a, defaultInjects.get(a));
                     }
