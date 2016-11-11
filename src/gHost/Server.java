@@ -1,10 +1,10 @@
 package gHost;
 
-import Phantom.DefaultInjects;
 import Phantom.FileUtils;
 import gHost.Logger.Level;
 import gHost.Logger.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,8 +18,9 @@ public class Server implements Repository {
     public static boolean caseSensitiveRoutes; //Allows URL requests to be of any capitalization
     public static boolean debugMode; //Enables additional logging information for debugging
     public static boolean fileCompressor; //Reduces file size of HTML, CSS & JavaScript files
-    public static boolean enablePhantom;
-    public static boolean enableGraves;
+    public static boolean enablePhantom; //Enable or disable Phantom functionality (Fragments, compression, default injects, etc.)
+    public static boolean enableGraves; //Enable or disable Graves (custom defined variables)
+    public static boolean persistentData; //Save and load Graves and repository data from file
 
     /* Default to port 80. */
     public void startServer(){

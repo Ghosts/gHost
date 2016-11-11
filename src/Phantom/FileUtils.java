@@ -73,9 +73,33 @@ public class FileUtils implements Repository {
        }
 
     static String fragmentString(String fileName, Charset encoding)
-            throws IOException
     {
-        byte[] encoded = Files.readAllBytes(Paths.get(directories.get("fragments") + fileName + ".html"));
+        byte[] encoded = new byte[0];
+        try {
+            encoded = Files.readAllBytes(Paths.get(directories.get("fragments") + fileName + ".html"));
+        } catch (IOException e) {
+            Logger.log(Level.ERROR, e.toString());
+        }
         return new String(encoded, encoding);
+    }
+
+    public static void createTempData() throws IOException {
+        File data = new File(System.getProperty("user.home") + "/" + ".gHostPersistentData");
+        writeTempData(data);
+        Logger.log(Level.INFO,"Data file Saved to: " + data.getAbsolutePath());
+    }
+
+    private static void writeTempData(File data){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(data))){
+            PhantomDynamics phantomDynamics = new PhantomDynamics();
+            if(!graves.isEmpty()){
+              for(String s : graves.keySet()){
+                  writer.write(s + "|" + phantomDynamics.graveClean(s) + "\r\n");
+              }
+            }
+        } catch (IOException e) {
+            Logger.log(Level.ERROR,e.toString());
+        }
+
     }
 }

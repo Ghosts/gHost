@@ -11,7 +11,7 @@ import java.lang.reflect.Array;
 * */
 class PhantomDynamics implements Repository {
     private String grave = "";
-    Object graveClean(String grave){
+    public String graveClean(String grave){
         this.grave = grave;
         this.grave = grave.replaceAll("``", "");
         return graveIdentify();
@@ -44,14 +44,7 @@ class PhantomDynamics implements Repository {
 
     /* Return the string value of a grave variable. Empty string if the grace does not exist. */
     private String graveString(){
-            if(graves.get(grave).toString().contains("Fragment:")){
-
-            }
             return (String) graves.get(grave);
-    }
-
-    private String graveFragment(){
-            return "";
     }
 
     private String graveIterate(){
