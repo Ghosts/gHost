@@ -39,6 +39,8 @@ public class DefaultInjects implements Repository {
 
         /* Phantom for Fragment Inject */
         defaultInjects.put("<%Fragment%>", "");
+        /* Phantom for Dynamic Element */
+        defaultInjects.put("<%Dynamic%>","");
 
         /* Phantom graves Checker */
         defaultInjects.put("``", "");

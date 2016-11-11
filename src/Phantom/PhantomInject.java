@@ -17,10 +17,15 @@ import java.util.regex.Pattern;
 * handles custom grave variables which may require more complex operations.
 * */
 public class PhantomInject implements Repository {
-    private PhantomDynamics PhantomDynamics = new PhantomDynamics();
+    private PhantomGraves PhantomGraves = new PhantomGraves();
 
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
-        File page = new File(directories.get("resources") + directories.get("pages") + pageRequest + ".html");
+        File page;
+        if(pageRequest.contains("/Dynamics/")){
+            page = new File(pageRequest);
+        } else {
+            page = new File(directories.get("resources") + directories.get("pages") + pageRequest + ".html");
+        }
         try
                 (
                         FileInputStream in = new FileInputStream(page);
@@ -35,7 +40,7 @@ public class PhantomInject implements Repository {
                                 Pattern p = Pattern.compile("``\\w++");
                                 Matcher m = p.matcher(line);
                                 while (m.find()) {
-                                    line = line.replace(m.group(), (String) PhantomDynamics.graveClean(m.group()));
+                                    line = line.replace(m.group(), PhantomGraves.graveClean(m.group()));
                                 }
                             }
                         }
@@ -43,6 +48,13 @@ public class PhantomInject implements Repository {
                             String fileName = line.replace("<%Fragment%>", "");
                             fileName = fileName.replaceAll("\\s", "");
                             line = FileUtils.fragmentString(fileName, Charset.defaultCharset());
+                        }
+                        if(line.contains("<%Dynamic%>")){
+                            String dynamicName = line.replace("<%Dynamic%>","").trim();
+                            String[] dynamicParams = dynamicName.split(" ");
+                            routes.put("/dynamic", directories.get("dynamics")+"/"+ dynamicParams[0]);
+                            FileUtils.fileSelectReplace(directories.get("dynamics") +"/dynamic.js", "dynamicID", dynamicParams[1]);
+                            line = "<script type=\"text/javascript\" src=\"" + "/dynamic.js\"" + "></script>";
                         }
                         line = line.replace(a, defaultInjects.get(a));
                     }

@@ -101,7 +101,7 @@ public class ClientHandler implements Runnable, Repository {
     }
 
     synchronized private void pageLoader(String pageRequest) {
-            /* Perform PhantomInjects before client write*/
+        /* Perform PhantomInjects before client write*/
         PhantomInject.injectPage(pageRequest, clientOutput);
     }
 
@@ -145,6 +145,9 @@ public class ClientHandler implements Runnable, Repository {
     private void loadExternalFile(String fileRequested) {
         String filepath;
         filepath = directories.get("resources") + "/" + fileRequested;
+        if(fileRequested.contains("/dynamic.js")){
+            filepath = directories.get("dynamics") + fileRequested;
+        }
         String extension = "";
         int i = filepath.lastIndexOf('.');
         if (i > 0) {
@@ -175,7 +178,7 @@ public class ClientHandler implements Runnable, Repository {
             byte[] array = Files.readAllBytes(file.toPath());
             client.getOutputStream().write(array, 0, array.length);
         } catch (IOException e) {
-            Logger.log(Level.WARNING, e.toString());
+            Logger.log(Level.ERROR, e.toString());
         }
     }
 }

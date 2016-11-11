@@ -5,14 +5,14 @@ import gHost.Repository;
 import java.lang.reflect.Array;
 
 /*
-* Phantom Dynamics handles complex grave variables which may require more complicated
+* PhantomGraves handles complex grave variables which may require more complicated
 * operations than a simple injection. These include iterative lists, user interaction,
 * and variables requiring access to java methods / integrations.
 * */
-class PhantomDynamics implements Repository {
+class PhantomGraves implements Repository {
     private String grave = "";
 
-    public String graveClean(String grave) {
+    String graveClean(String grave) {
         this.grave = grave;
         this.grave = grave.replaceAll("``", "");
         return graveIdentify();
