@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * ClientHandler: responsible for the correct routing of client on connect and request.
-*/
+ */
 
 public class ClientHandler implements Runnable, Repository {
     static final AtomicInteger clientCounter = new AtomicInteger(0);
@@ -25,13 +25,13 @@ public class ClientHandler implements Runnable, Repository {
     ClientHandler(Socket client) {
         new DefaultInjects(); // Populate Default Injects -- TODO: find better instantiation spot.
         this.client = client;
-        String ip = (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/","");
+        String ip = (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/", "");
         gHost.DataHandler dataHandler = new DataHandler();
         dataHandler.addAddress(ip);
     }
 
     /* Default Constructor ONLY used for clientOutput write methods. */
-    public ClientHandler(){
+    public ClientHandler() {
         this(Server.client);
     }
 
@@ -67,11 +67,16 @@ public class ClientHandler implements Runnable, Repository {
 
     private void routeFilter(String[] request) {
         String[] queries = StringUtils.formatQuery(request);
-        if(queries.length!=0){
-            System.out.println(queries[0]);}
+        if (queries.length != 0) {
+            System.out.println(queries[0]);
+        }
         String url = request[1];
-        if(Server.debugMode){Logger.log(Level.INFO,"Route Request: " + url);}
-        if(!Server.caseSensitiveRoutes){url = url.toLowerCase();}
+        if (Server.debugMode) {
+            Logger.log(Level.INFO, "Route Request: " + url);
+        }
+        if (!Server.caseSensitiveRoutes) {
+            url = url.toLowerCase();
+        }
         /* Catch all external file calls */
         if (url.contains(".")) {
             loadExternalFile(url);
@@ -97,7 +102,7 @@ public class ClientHandler implements Runnable, Repository {
 
     synchronized private void pageLoader(String pageRequest) {
             /* Perform PhantomInjects before client write*/
-            PhantomInject.injectPage(pageRequest, clientOutput);
+        PhantomInject.injectPage(pageRequest, clientOutput);
     }
 
 

@@ -14,12 +14,12 @@ import java.util.Date;
 * */
 public class DefaultInjects implements Repository {
 
-    public DefaultInjects(){
+    public DefaultInjects() {
         addDefaults();
     }
 
     /* Default out-of-the-box Phantom Injects */
-    private void addDefaults(){
+    private void addDefaults() {
         /* Phantom for Current Date */
         Date currentDate = new Date();
         SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
@@ -31,16 +31,16 @@ public class DefaultInjects implements Repository {
         String time12Inject = time12.format(currentDate);
         SimpleDateFormat time24 = new SimpleDateFormat("HH:mm");
         String tim24Inject = time24.format(currentDate);
-        defaultInjects.put("<%Time12%>",time12Inject);
-        defaultInjects.put("<%Time24%>",tim24Inject);
+        defaultInjects.put("<%Time12%>", time12Inject);
+        defaultInjects.put("<%Time24%>", tim24Inject);
 
         /* Phantom for user IP */
-        defaultInjects.put("<%IP%>", (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/",""));
+        defaultInjects.put("<%IP%>", (((InetSocketAddress) Server.client.getRemoteSocketAddress()).getAddress()).toString().replace("/", ""));
 
         /* Phantom for Fragment Inject */
         defaultInjects.put("<%Fragment%>", "");
 
         /* Phantom graves Checker */
-        defaultInjects.put("``","");
+        defaultInjects.put("``", "");
     }
 }

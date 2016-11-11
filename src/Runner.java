@@ -4,7 +4,6 @@ import gHost.Logger.Logger;
 import gHost.Repository;
 import gHost.Server;
 
-import java.io.File;
 import java.io.IOException;
 
 class Runner implements Repository {
@@ -19,7 +18,7 @@ class Runner implements Repository {
         Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
         Server.enableGraves = true; //If disabled, Phantom Defaults will work, but Grave variables will not.
         Server.persistentData = true; //If enabled, dynamic Graves & repository data is saved and loaded on each restart.
-        if(Server.persistentData){
+        if (Server.persistentData) {
             Runtime.getRuntime().addShutdownHook(
                     new Thread("gHostData") {
                         @Override
@@ -27,13 +26,13 @@ class Runner implements Repository {
                             try {
                                 FileUtils.createTempData();
                             } catch (IOException e) {
-                                Logger.log(Level.ERROR,e.toString());
+                                Logger.log(Level.ERROR, e.toString());
                             }
                         }
                     });
         }
         String d = Runner.class.getProtectionDomain().getCodeSource().getLocation().toString();
-        d = d.replace("file:/","");
+        d = d.replace("file:/", "");
         d = d.replace("/out/production/gHost/", "/");
 
         /*Add Working Directories. */
@@ -43,41 +42,41 @@ class Runner implements Repository {
         /* Resources should be where images, js, css, html, etc. are located. */
         directories.put("resources", d);
         /* If pages are not saved within resources, add the subdirectory path to append to resources */
-        directories.put("pages","");
+        directories.put("pages", "");
         /* Directory for location of fragments */
         directories.put("fragments", directories.get("root") + "src/Phantom/Fragments/");
 
         /*Set up Routes - not case sensitive by default. */
-        routes.put("/","index");
-        routes.put("/index","index");
-        routes.put("/home","index");
+        routes.put("/", "index");
+        routes.put("/index", "index");
+        routes.put("/home", "index");
 
         /* Set Up Graves */
-        graves.put("Phantom_Check","Phantom Dynamics are working correctly.");
+        graves.put("Phantom_Check", "Phantom Dynamics are working correctly.");
 
         /* Start server after settings, routes, graves, etc. */
-            switch (args.length) {
+        switch (args.length) {
             /* Two arguments - port and rootDirectory*/
-                case 2:
-                    int port = Integer.parseInt(args[0]);
-                    directories.put("root", args[1]);
-                    server.startServer(port);
-                    break;
-                case 3:
-                    port = Integer.parseInt(args[0]);
-                    directories.put("root", args[1]);
-                    directories.put("resources", args[2]);
-                    server.startServer(port);
-                    break;
-                case 4:
-                    port = Integer.parseInt(args[0]);
-                    directories.put("root", args[1]);
-                    directories.put("resources", args[2]);
-                    server.startServer(port);
-                    break;
-                default:
-                    server.startServer();
-                    break;
-            }
+            case 2:
+                int port = Integer.parseInt(args[0]);
+                directories.put("root", args[1]);
+                server.startServer(port);
+                break;
+            case 3:
+                port = Integer.parseInt(args[0]);
+                directories.put("root", args[1]);
+                directories.put("resources", args[2]);
+                server.startServer(port);
+                break;
+            case 4:
+                port = Integer.parseInt(args[0]);
+                directories.put("root", args[1]);
+                directories.put("resources", args[2]);
+                server.startServer(port);
+                break;
+            default:
+                server.startServer();
+                break;
+        }
     }
 }

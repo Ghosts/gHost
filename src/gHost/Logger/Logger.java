@@ -12,9 +12,9 @@ public class Logger {
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_BLUE = "\u001B[34m";
 
-    public static void log(Level level, String message){
+    public static void log(Level level, String message) {
         Date date = new Date();
-        switch(level){
+        switch (level) {
             case INFO:
                 System.out.print(ANSI_PURPLE + level + ANSI_RESET + ": " + date + "\r\n" + ANSI_CYAN + message + ". " + ANSI_RESET);
                 System.out.print("Calling class: " + new Exception().getStackTrace()[1].getClassName()

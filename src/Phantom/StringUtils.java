@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class StringUtils {
 
     /* Parses query information from the requested URL. */
-   public static String[] formatQuery(String[] request) {
+    public static String[] formatQuery(String[] request) {
         if (request[1].contains("?")) {
             String query;
             /* Remove query from URL for it to be passed on to routeFilter */
@@ -31,7 +31,9 @@ public class StringUtils {
                         .replaceAll(".*=", "")
                         .replaceAll("\\+", " ");
             }
-            if (Server.debugMode){Logger.log(Level.INFO,"URL Query(s) Found: " + Arrays.toString(queries));}
+            if (Server.debugMode) {
+                Logger.log(Level.INFO, "URL Query(s) Found: " + Arrays.toString(queries));
+            }
             return queries;
         }
         /* Return nothing if no queries exist, DataHandler will ignore a blank query */
@@ -57,7 +59,7 @@ public class StringUtils {
 
     /* Useful for iterative auto-filled content, or any need for appending an ordinal to strings. */
     public static String getOrdinal(int i) {
-        String[] suffixes = new String[] { "th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th" };
+        String[] suffixes = new String[]{"th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"};
         switch (i % 100) {
             case 11:
             case 12:

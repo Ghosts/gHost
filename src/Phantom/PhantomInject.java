@@ -10,13 +10,15 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 /*
 * Phantom Inject contains the methods which identify and replace grave variables
 * into their representations. Injects are limited to basic replacements. Phantom Dynamics
 * handles custom grave variables which may require more complex operations.
 * */
-public class PhantomInject implements Repository  {
+public class PhantomInject implements Repository {
     private PhantomDynamics PhantomDynamics = new PhantomDynamics();
+
     synchronized public void injectPage(String pageRequest, PrintWriter clientOutput) {
         File page = new File(directories.get("resources") + directories.get("pages") + pageRequest + ".html");
         try
@@ -26,9 +28,9 @@ public class PhantomInject implements Repository  {
                 ) {
             String line;
             while ((line = reader.readLine()) != null) {
-                if(Server.enablePhantom) {
+                if (Server.enablePhantom) {
                     for (String a : defaultInjects.keySet()) {
-                        if(Server.enableGraves) {
+                        if (Server.enableGraves) {
                             if (a.contains("``")) {
                                 Pattern p = Pattern.compile("``\\w++");
                                 Matcher m = p.matcher(line);
@@ -37,9 +39,9 @@ public class PhantomInject implements Repository  {
                                 }
                             }
                         }
-                        if(line.contains("<%Fragment%>")) {
-                            String fileName = line.replace("<%Fragment%>","");
-                            fileName = fileName.replaceAll("\\s","");
+                        if (line.contains("<%Fragment%>")) {
+                            String fileName = line.replace("<%Fragment%>", "");
+                            fileName = fileName.replaceAll("\\s", "");
                             line = FileUtils.fragmentString(fileName, Charset.defaultCharset());
                         }
                         line = line.replace(a, defaultInjects.get(a));

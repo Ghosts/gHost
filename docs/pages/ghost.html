@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>gHost v0.05b</title>
-    <link href="../resources/css/global.css" rel="stylesheet"/></head>
+    <link href="../resources/css/global.css" rel="stylesheet"/>
+</head>
 <body class="patternbg">
 <div class="img">
     <div class="logos">
@@ -13,27 +14,37 @@
         <h2>gHost</h2>
         <hr>
         <h2>The Basics</h2>
-        <p>gHost follows a simple format to ensure fast deployment and a small learning curve. A primary goal of gHost is to offer a streamlined
-        setup process for beginners, while allowing additional modifications and additions as needed. To launch a gHost server, you may simply
-        run the Runner.Java file without arguments. However, to allow a greater flexibility Runner.Java also allows you to pass the following
-        parameter schemes:</p>
+        <p>gHost follows a simple format to ensure fast deployment and a small learning curve. A primary goal of gHost
+            is to offer a streamlined
+            setup process for beginners, while allowing additional modifications and additions as needed. To launch a
+            gHost server, you may simply
+            run the Runner.Java file without arguments. However, to allow a greater flexibility Runner.Java also allows
+            you to pass the following
+            parameter schemes:</p>
         <pre>
         Runner.Java [Port] [Root Directory Path]<br/>
         Runner.Java [Port] [Root Directory Path] [Resources Path]<br/>
         Runner.Java [Port] [Root Directory Path] [Resources Path] [Pages Subdirectory]
         </pre>
         <p>
-            By default, gHost will use port 80 and locate the default gHost server page + resources directory in order to serve files.
-            You may begin using gHost by following the default file directory schema and simply adding .html, .css, .js, and images within
-            their default folder structures. The directory settings within Runner.Java allow greater flexibility and real-time testing.
-            It is not advisable to use passed arguments to setup directory paths, and is rather offered as a feature to quickly switch directories
-            and run separate instances of gHost via command line. All routes, directories, variables, and settings should be set within the Runner.Java file.
+            By default, gHost will use port 80 and locate the default gHost server page + resources directory in order
+            to serve files.
+            You may begin using gHost by following the default file directory schema and simply adding .html, .css, .js,
+            and images within
+            their default folder structures. The directory settings within Runner.Java allow greater flexibility and
+            real-time testing.
+            It is not advisable to use passed arguments to setup directory paths, and is rather offered as a feature to
+            quickly switch directories
+            and run separate instances of gHost via command line. All routes, directories, variables, and settings
+            should be set within the Runner.Java file.
 
         </p>
         <h2>Runner.Java</h2>
-        <p>Runner.Java has been referenced multiple times but it may not be immediately clear what this class is intended for. Although all gHost code
-        can be viewed in their respective classes, Runner.Java drives each component and controls the settings & setup of gHost itself. Any settings
-        or required setup calls in order to run gHost are controlled within the Runner.Java class.</p>
+        <p>Runner.Java has been referenced multiple times but it may not be immediately clear what this class is
+            intended for. Although all gHost code
+            can be viewed in their respective classes, Runner.Java drives each component and controls the settings &
+            setup of gHost itself. Any settings
+            or required setup calls in order to run gHost are controlled within the Runner.Java class.</p>
         <br/>
         <div style="display:inline-block">
             <br/>

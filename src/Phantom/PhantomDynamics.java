@@ -11,26 +11,27 @@ import java.lang.reflect.Array;
 * */
 class PhantomDynamics implements Repository {
     private String grave = "";
-    public String graveClean(String grave){
+
+    public String graveClean(String grave) {
         this.grave = grave;
         this.grave = grave.replaceAll("``", "");
         return graveIdentify();
     }
 
     /* Identify and return correct grave operation. Empty string if invalid. */
-    private String graveIdentify(){
-        if(graves.get(grave) != null){
+    private String graveIdentify() {
+        if (graves.get(grave) != null) {
             Object graveIdentified = graves.get(grave);
-            if (graveIdentified instanceof String){
+            if (graveIdentified instanceof String) {
                 return graveString();
             }
-            if (graveIdentified instanceof Iterable){
+            if (graveIdentified instanceof Iterable) {
                 return graveIterate();
             }
-            if (graveIdentified instanceof Number){
+            if (graveIdentified instanceof Number) {
                 return graveNumber();
             }
-            if (graveIdentified instanceof Array[]){
+            if (graveIdentified instanceof Array[]) {
                 return graveArray();
             }
             /* If not identified, assume a toString() method exists. */
@@ -43,14 +44,14 @@ class PhantomDynamics implements Repository {
     }
 
     /* Return the string value of a grave variable. Empty string if the grace does not exist. */
-    private String graveString(){
-            return (String) graves.get(grave);
+    private String graveString() {
+        return (String) graves.get(grave);
     }
 
-    private String graveIterate(){
+    private String graveIterate() {
         Iterable graveIdentified = (Iterable) graves.get(grave);
         final String[] graveIterate = {""};
-        graveIdentified.forEach(o -> graveIterate[0] += o.toString()+ ", ");
+        graveIdentified.forEach(o -> graveIterate[0] += o.toString() + ", ");
         return graveIterate[0];
     }
 
@@ -60,7 +61,7 @@ class PhantomDynamics implements Repository {
 
     private String graveArray() {
         String graveResult = "";
-        for (int i = 0; i < ((Array[]) graves.get(grave)).length - 1 ; i++) {
+        for (int i = 0; i < ((Array[]) graves.get(grave)).length - 1; i++) {
             graveResult += ((Array[]) graves.get(grave))[i].toString() + " ,";
         }
         return graveResult;

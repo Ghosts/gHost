@@ -11,8 +11,9 @@ class DataHandler implements Repository {
     synchronized void addAddress(String ipAddress) {
         if (!connectedIPs.containsKey(ipAddress)) {
             connectedIPs.put(ipAddress, ClientHandler.clientCounter.incrementAndGet());
-            if(Server.debugMode){
-                Logger.log(Level.INFO,"New Connection From: " + ipAddress);}
+            if (Server.debugMode) {
+                Logger.log(Level.INFO, "New Connection From: " + ipAddress);
+            }
         }
     }
 

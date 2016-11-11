@@ -4,13 +4,13 @@ import Phantom.FileUtils;
 import gHost.Logger.Level;
 import gHost.Logger.Logger;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 /**
  * Server: represents the outermost layer of a clients connection to the program.
-*/
+ */
 public class Server implements Repository {
     public static Socket client;
 
@@ -23,9 +23,10 @@ public class Server implements Repository {
     public static boolean persistentData; //Save and load Graves and repository data from file
 
     /* Default to port 80. */
-    public void startServer(){
+    public void startServer() {
         startServer(80);
     }
+
     /**
      * Start server and allow for outside connections to be routed.
      */
@@ -33,8 +34,12 @@ public class Server implements Repository {
         try (ServerSocket server = new ServerSocket(port)) {
             boolean running = true;
             Logger.log(Level.INFO, "gHost.Server started on port: " + port);
-            if(debugMode){directories.forEach((k,v) -> Logger.log(Level.INFO,"Directory: "+ k + " Path: " + v));}
-            if(fileCompressor){new FileUtils().compressFiles(directories.get("resources"));}
+            if (debugMode) {
+                directories.forEach((k, v) -> Logger.log(Level.INFO, "Directory: " + k + " Path: " + v));
+            }
+            if (fileCompressor) {
+                new FileUtils().compressFiles(directories.get("resources"));
+            }
             while (running) {
                 /* Passes output for each method requiring output access, removed need for class variables */
                 try {
