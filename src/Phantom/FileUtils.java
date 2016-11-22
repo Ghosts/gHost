@@ -30,31 +30,44 @@ public class FileUtils implements Repository {
     }
 
     public static void loadgHostData() throws IOException {
-        try(    BufferedReader reader = new BufferedReader(new FileReader(System.getProperty("user.home") +
-        "/" + ".gHostPersistentData"))) {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                String[] data = line.split("\\|");
-                graves.put(data[0],data[1]);
+        if(isgHostData()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(System.getProperty("user.home") +
+                    "/" + ".gHostPersistentData"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split("\\|");
+                    graves.put(data[0], data[1]);
+                }
+                reader.close();
             }
-            reader.close();
         }
     }
 
     private static void writegHostData(File data) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(data))) {
-            PhantomGraves phantomGraves = new PhantomGraves();
-            if (!graves.isEmpty()) {
-                for (String s : graves.keySet()) {
-                    writer.write(s + "|" + phantomGraves.graveClean(s) + "\r\n");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(data))) {
+                PhantomGraves phantomGraves = new PhantomGraves();
+                if (!graves.isEmpty()) {
+                    for (String s : graves.keySet()) {
+                        writer.write(s + "|" + phantomGraves.graveClean(s) + "\r\n");
+                    }
                 }
+            } catch (IOException e) {
+                Logger.log(Level.ERROR, e.toString());
             }
+        }
+
+
+    /* Boolean check to see if prior persistent data saves exist. */
+    private static boolean isgHostData(){
+        try (BufferedReader read = new BufferedReader(new FileReader(new File(System.getProperty("user.home") + "/" + ".gHostPersistentData")))) {
+        return true;
         } catch (IOException e) {
-            Logger.log(Level.ERROR, e.toString());
+            return false;
         }
     }
 
+
+    /* Will work to serve compressed versions of files to users. Currently pseudo-works on CSS files. */
     public void compressFiles(String directory) {
         File folder = new File(directory);
         File[] listOfFiles = folder.listFiles();
@@ -70,7 +83,7 @@ public class FileUtils implements Repository {
                         || file.contains(".js")
                         ||*/ file.contains(".css")) {
 
-                    createFiles(file);
+                    createCompressedFiles(file);
                 }
             } else if (listOfFile.isDirectory()) {
                 compressFiles(listOfFile.toString());
@@ -78,7 +91,8 @@ public class FileUtils implements Repository {
         }
     }
 
-    private void createFiles(String file) {
+    /* Creates the compressed versions of files for serving to visitors. */
+    private void createCompressedFiles(String file) {
         File oldFile = new File(file);
         String oldFileName = oldFile.toString();
         String newFileName = oldFile.toString().replace("." + getExtension(oldFileName), "_comp" + "." + getExtension(oldFileName));
@@ -86,7 +100,8 @@ public class FileUtils implements Repository {
         compress(oldFile, newFile);
     }
 
-    private String getExtension(String filePath) {
+    /* Returns the extension of a file based on a path (such as requested URL). */
+    public static String getExtension(String filePath) {
         String extension = "";
         int i = filePath.lastIndexOf('.');
         if (i > 0) {
@@ -95,6 +110,7 @@ public class FileUtils implements Repository {
         return extension;
     }
 
+    /* Performs the actual file compression. */
     private void compress(File initial, File compressed) {
         try
                 (
@@ -114,9 +130,9 @@ public class FileUtils implements Repository {
         }
     }
 
+    /* Replaces one string with another within a file. */
     static void fileSelectReplace(String filePath, String replaceThis, String withThis) {
         try {
-            System.out.println(filePath + "<<<<<<<<<<");
             Path path = Paths.get(filePath);
             String content = new String(Files.readAllBytes(path), Charset.defaultCharset());
             content = content.replaceAll(replaceThis, withThis);

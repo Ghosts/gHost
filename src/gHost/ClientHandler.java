@@ -1,6 +1,7 @@
 package gHost;
 
 import Phantom.DefaultInjects;
+import Phantom.FileUtils;
 import Phantom.PhantomInject;
 import Phantom.StringUtils;
 import gHost.Logger.Level;
@@ -148,11 +149,7 @@ public class ClientHandler implements Runnable, Repository {
         if(fileRequested.contains("/dynamic.js")){
             filepath = directories.get("dynamics") + fileRequested;
         }
-        String extension = "";
-        int i = filepath.lastIndexOf('.');
-        if (i > 0) {
-            extension = filepath.substring(i + 1);
-        }
+        String extension = FileUtils.getExtension(filepath);
         extension = extension.toLowerCase();
         switch (extension) {
             case "ico":

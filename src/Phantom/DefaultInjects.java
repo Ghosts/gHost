@@ -14,6 +14,7 @@ import java.util.Date;
 * */
 public class DefaultInjects implements Repository {
 
+    /* Loads default injects to be used by HTML. */
     public DefaultInjects() {
         addDefaults();
     }

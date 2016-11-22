@@ -13,7 +13,7 @@ class Runner implements Repository {
         /* Server settings */
         //IMPORTANT: These settings may not be 100% stable. Please refer to documentation.
         Server.caseSensitiveRoutes = true; //Allows URL requests to be of any capitalization
-        Server.debugMode = false; //Enables additional logging information for debugging
+        Server.debugMode = true; //Enables additional logging information for debugging
         Server.fileCompressor = false; //Reduces file size of HTML, CSS & JavaScript files
         Server.enablePhantom = true; //If disabled, neither Phantom Defaults nor Grave Variables will work.
         Server.enableGraves = true; //If disabled, Phantom Defaults will work, but Grave variables will not.
@@ -52,6 +52,7 @@ class Runner implements Repository {
         /* Directory for location of fragments */
         directories.put("fragments", directories.get("root") + "src/Phantom/Fragments/");
         directories.put("dynamics", directories.get("root") + "src/Phantom/Dynamics");
+
         /*Set up Routes - not case sensitive by default. */
         routes.put("/", "index");
         routes.put("/index", "index");

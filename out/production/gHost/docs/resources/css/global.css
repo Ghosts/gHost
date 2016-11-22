@@ -21,13 +21,18 @@ h1 {
 
 .card {
     width: 500px;
-    height: 500px;
+    height: 400px;
     background: #fff;
     border-radius: 2px;
     display: inline-block;
     margin: 1rem;
     position: relative;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.full {
+    width: 60%;
+    height: auto;
 }
 
 h2 {
@@ -78,7 +83,7 @@ pre {
     border: 1px dotted #202d3a;
     margin: 0 auto;
     text-align: left !important;
-    padding-left: 75px;
+    padding: 25px 25px 25px 75px;
 }
 
 .logos img:nth-child(2) {
